@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiopian Quantifiers Adventure | የቁጥር መለኪያ ጨዋታ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif;
+            background: linear-gradient(135deg, #fef08a 0%, #16a34a 50%, #dc2626 100%);
+            min-height: 100vh;
+        }
+        .ethiopian-border {
+            border: 6px solid transparent;
+            border-image: linear-gradient(to right, #16a34a, #facc15, #dc2626) 1;
+        }
+        .bounce-in {
+            animation: bounceIn 0.4s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            70% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 p-3 md:p-6 flex flex-col items-center justify-center">
+
+    <div class="max-w-4xl w-full bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl ethiopian-border p-5 md:p-8 mb-6">
+        
+        <!-- Header with Title & Audio Guidance -->
+        <div class="flex flex-col md:flex-row items-center justify-between border-b-2 border-emerald-100 pb-5 mb-5 gap-3">
+            <div class="text-center md:text-left">
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">🇪🇹 Ethiopian Learning Adventure</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-emerald-900 mt-1">Quantifiers Quest</h1>
+                <p class="text-xs md:text-sm text-slate-600">የቁጥር መለኪያዎች ጨዋታ (Some, Any, Much, Many, All, Both)</p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button onclick="playIntroSpeech()" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2.5 rounded-2xl font-bold shadow-md flex items-center gap-2 transition transform hover:scale-105 text-sm">
+                    <i class="fa-solid fa-volume-high text-base"></i>
+                    <span>British Narrator</span>
+                </button>
+                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-2xl font-bold border border-emerald-200 text-sm">
+                    🏆 Score: <span id="score" class="text-emerald-600 text-lg">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Mode Selection Tabs -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 mb-6">
+            <button onclick="switchTab('rule')" id="tab-rule" class="py-3 px-3 rounded-2xl font-bold text-xs md:text-sm bg-emerald-600 text-white shadow-md transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-book-open"></i> 1. Rules & Guide
+            </button>
+            <button onclick="switchTab('market')" id="tab-market" class="py-3 px-3 rounded-2xl font-bold text-xs md:text-sm bg-slate-100 text-slate-700 hover:bg-emerald-50 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-basket-shopping"></i> 2. Merkato Market
+            </button>
+            <button onclick="switchTab('builder')" id="tab-builder" class="py-3 px-3 rounded-2xl font-bold text-xs md:text-sm bg-slate-100 text-slate-700 hover:bg-emerald-50 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-puzzle-piece"></i> 3. Sentence Builder
+            </button>
+            <button onclick="switchTab('bothall')" id="tab-bothall" class="py-3 px-3 rounded-2xl font-bold text-xs md:text-sm bg-slate-100 text-slate-700 hover:bg-emerald-50 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-users"></i> 4. Both vs All
+            </button>
+        </div>
+
+        <!-- SECTION 1: RULES & GUIDE -->
+        <div id="section-rule" class="game-section space-y-6">
+            <div class="bg-gradient-to-r from-amber-50 to-emerald-50 p-5 rounded-2xl border border-amber-200 shadow-inner">
+                <h2 class="text-2xl font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i> Quantifier Rules | የቁጥር መለኪያዎች ህጎች
+                </h2>
+                <p class="text-slate-700 text-sm mb-4">Learn how each quantifier is used in English with clear Amharic translations!</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Many -->
+                    <div class="bg-white p-4 rounded-2xl shadow border-l-4 border-green-600">
+                        <h3 class="font-bold text-base text-emerald-800">MANY (ብዙ - የሚቆጠሩ)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Use with countable plural nouns (ለሚቆጠሩ ነገሮች)።</p>
+                        <p class="text-xs text-amber-800 mt-2 bg-amber-50 p-2 rounded">Ex: There are <strong>many</strong> pencils.<br><span class="text-slate-500">(ብዙ እርሳሶች አሉ)</span></p>
+                        <button onclick="speakText('There are many pencils.')" class="mt-2 text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-xl font-bold hover:bg-emerald-200 flex items-center gap-1"><i class="fa-solid fa-volume-high"></i> Listen</button>
+                    </div>
+
+                    <!-- Much -->
+                    <div class="bg-white p-4 rounded-2xl shadow border-l-4 border-blue-600">
+                        <h3 class="font-bold text-base text-blue-800">MUCH (ብዙ - የማይቆጠሩ)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Use with uncountable mass nouns (ለማይቆጠሩ ነገሮች)።</p>
+                        <p class="text-xs text-amber-800 mt-2 bg-amber-50 p-2 rounded">Ex: I have <strong>much</strong> money.<br><span class="text-slate-500">(ብዙ ገንዘብ አለኝ)</span></p>
+                        <button onclick="speakText('I have much money.')" class="mt-2 text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-xl font-bold hover:bg-blue-200 flex items-center gap-1"><i class="fa-solid fa-volume-high"></i> Listen</button>
+                    </div>
+
+                    <!-- Some -->
+                    <div class="bg-white p-4 rounded-2xl shadow border-l-4 border-purple-600">
+                        <h3 class="font-bold text-base text-purple-800">SOME (አንዳንድ / ጥቂት)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Use in positive statements (+), or polite offers/requests.</p>
+                        <p class="text-xs text-amber-800 mt-2 bg-amber-50 p-2 rounded">Ex: There are <strong>some</strong> pencils.<br><span class="text-slate-500">(አንዳንድ እርሳሶች አሉ)</span></p>
+                        <button onclick="speakText('There are some pencils.')" class="mt-2 text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-xl font-bold hover:bg-purple-200 flex items-center gap-1"><i class="fa-solid fa-volume-high"></i> Listen</button>
+                    </div>
+
+                    <!-- Any -->
+                    <div class="bg-white p-4 rounded-2xl shadow border-l-4 border-red-600">
+                        <h3 class="font-bold text-base text-red-800">ANY (ምንም / ማናቸውም)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Use in negative statements (-) and questions (?)</p>
+                        <p class="text-xs text-amber-800 mt-2 bg-amber-50 p-2 rounded">Ex: Do you have <strong>any</strong> money?<br><span class="text-slate-500">(ምንም ገንዘብ አለህ?)</span></p>
+                        <button onclick="speakText('Do you have any money?')" class="mt-2 text-xs bg-red-100 text-red-800 px-3 py-1 rounded-xl font-bold hover:bg-red-200 flex items-center gap-1"><i class="fa-solid fa-volume-high"></i> Listen</button>
+                    </div>
+
+                    <!-- Both -->
+                    <div class="bg-white p-4 rounded-2xl shadow border-l-4 border-amber-600">
+                        <h3 class="font-bold text-base text-amber-800">BOTH (ሁለቱም)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Use for exactly TWO persons or objects (ለሁለት ነገሮች/ሰዎች)።</p>
+                        <p class="text-xs text-amber-800 mt-2 bg-amber-50 p-2 rounded">Ex: <strong>Both</strong> the boy and the girl are my friends.<br><span class="text-slate-500">(ሁለቱም ወንድ እና ሴት ልጆች ጓደኞቼ ናቸው)</span></p>
+                        <button onclick="speakText('Both the boy and the girl are my friends.')" class="mt-2 text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-xl font-bold hover:bg-amber-200 flex items-center gap-1"><i class="fa-solid fa-volume-high"></i> Listen</button>
+                    </div>
+
+                    <!-- All -->
+                    <div class="bg-white p-4 rounded-2xl shadow border-l-4 border-teal-600">
+                        <h3 class="font-bold text-base text-teal-800">ALL (ሁሉም)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Use for THREE or more persons/objects (ለሦስት እና ከዚያ በላይ)።</p>
+                        <p class="text-xs text-amber-800 mt-2 bg-amber-50 p-2 rounded">Ex: I have three friends and I like <strong>all</strong> of them.<br><span class="text-slate-500">(ሦስት ጓደኞች አሉኝ፤ ሁሉንም እወዳቸዋለሁ)</span></p>
+                        <button onclick="speakText('I have three friends and I like all of them.')" class="mt-2 text-xs bg-teal-100 text-teal-800 px-3 py-1 rounded-xl font-bold hover:bg-teal-200 flex items-center gap-1"><i class="fa-solid fa-volume-high"></i> Listen</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button onclick="switchTab('market')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-2xl shadow-lg transition transform hover:scale-105">
+                    Start Playing Games! <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 2: MERKATO MARKET CHALLENGE -->
+        <div id="section-market" class="game-section hidden space-y-5">
+            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200 flex flex-col md:flex-row items-center justify-between gap-3">
+                <div>
+                    <span class="bg-emerald-200 text-emerald-900 text-xs font-bold px-3 py-1 rounded-full uppercase">Game 1: Merkato Market (ገበያ)</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-emerald-900 mt-1">Select the Correct Quantifier!</h2>
+                    <p class="text-xs md:text-sm text-slate-700">Choose the correct quantifier for each Ethiopian market item.</p>
+                </div>
+                <div class="text-right bg-white p-2.5 rounded-xl shadow-sm border border-emerald-100">
+                    <span class="text-xs text-slate-500 block">Question</span>
+                    <span id="market-progress" class="font-bold text-emerald-800">1 / 8</span>
+                </div>
+            </div>
+
+            <div id="market-card" class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 text-center max-w-xl mx-auto bounce-in">
+                <div id="market-emoji" class="text-6xl mb-3">🥔</div>
+                <h3 id="market-title" class="text-lg font-bold text-slate-800 mb-1">Loading...</h3>
+                <p id="market-amharic" class="text-xs text-emerald-700 font-semibold mb-4 bg-emerald-50 py-1 px-3 rounded-full inline-block">በአማርኛ...</p>
+                
+                <div class="bg-slate-50 p-4 rounded-xl mb-5 text-base md:text-lg font-medium text-slate-800 border border-slate-200">
+                    <span id="market-sentence-start">There are</span> 
+                    <span id="market-blank" class="inline-block border-b-2 border-emerald-600 text-emerald-700 font-bold px-3 min-w-[80px]">____</span> 
+                    <span id="market-sentence-end">potatoes in the basket.</span>
+                </div>
+
+                <!-- Dynamic Option Buttons -->
+                <div id="market-options" class="grid grid-cols-2 gap-3 mb-4">
+                </div>
+
+                <!-- Instant Elaborated Feedback Container -->
+                <div id="market-feedback-box" class="hidden text-left p-4 rounded-2xl border transition-all duration-300">
+                    <div id="market-feedback-title" class="font-bold text-base flex items-center gap-2 mb-2"></div>
+                    <div id="market-feedback-en" class="text-sm font-medium mb-1"></div>
+                    <div id="market-feedback-am" class="text-xs font-semibold"></div>
+                    <button id="market-next-btn" onclick="nextMarketQuestion()" class="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
+                        <span>Next Question</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SENTENCE BUILDER -->
+        <div id="section-builder" class="game-section hidden space-y-5">
+            <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200 flex flex-col md:flex-row items-center justify-between gap-3">
+                <div>
+                    <span class="bg-amber-200 text-amber-900 text-xs font-bold px-3 py-1 rounded-full uppercase">Game 2: Sentence Builder</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-amber-900 mt-1">Arrange the Quantifier Sentence</h2>
+                    <p class="text-xs md:text-sm text-slate-700">Tap words in the correct order to construct a proper English sentence.</p>
+                </div>
+                <div class="text-right bg-white p-2.5 rounded-xl shadow-sm border border-amber-100">
+                    <span class="text-xs text-slate-500 block">Puzzle</span>
+                    <span id="builder-progress" class="font-bold text-amber-800">1 / 5</span>
+                </div>
+            </div>
+
+            <div id="builder-card" class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 max-w-xl mx-auto text-center bounce-in">
+                <div id="builder-translation" class="text-xs md:text-sm text-amber-900 font-semibold mb-4 bg-amber-50 p-3 rounded-xl border border-amber-200"></div>
+                
+                <div id="builder-target" class="min-h-[60px] bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-3 flex flex-wrap items-center justify-center gap-2 mb-5">
+                    <span class="text-slate-400 italic text-xs">Tap words below to build sentence here...</span>
+                </div>
+
+                <div id="builder-source" class="flex flex-wrap items-center justify-center gap-2 mb-5">
+                    <!-- Word tokens -->
+                </div>
+
+                <div class="flex justify-center gap-3 mb-4">
+                    <button onclick="resetBuilder()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-2 rounded-xl transition text-sm">Reset</button>
+                    <button id="builder-check-btn" onclick="checkBuilder()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-2 rounded-xl shadow-md transition text-sm">Check Answer</button>
+                </div>
+
+                <!-- Instant Elaborated Feedback Container -->
+                <div id="builder-feedback-box" class="hidden text-left p-4 rounded-2xl border transition-all duration-300">
+                    <div id="builder-feedback-title" class="font-bold text-base flex items-center gap-2 mb-2"></div>
+                    <div id="builder-feedback-en" class="text-sm font-medium mb-1"></div>
+                    <div id="builder-feedback-am" class="text-xs font-semibold"></div>
+                    <button id="builder-next-btn" onclick="nextBuilderPuzzle()" class="mt-4 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
+                        <span>Next Puzzle</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: BOTH VS ALL CHALLENGE -->
+        <div id="section-bothall" class="game-section hidden space-y-5">
+            <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-200 flex flex-col md:flex-row items-center justify-between gap-3">
+                <div>
+                    <span class="bg-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1 rounded-full uppercase">Game 3: Both vs All (ሁለቱም vs ሁሉም)</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-indigo-900 mt-1">Two or More Than Two?</h2>
+                    <p class="text-xs md:text-sm text-slate-700">Remember: <strong>Both</strong> = exactly 2 items/people | <strong>All</strong> = 3 or more!</p>
+                </div>
+                <div class="text-right bg-white p-2.5 rounded-xl shadow-sm border border-indigo-100">
+                    <span class="text-xs text-slate-500 block">Challenge</span>
+                    <span id="bothall-progress" class="font-bold text-indigo-800">1 / 5</span>
+                </div>
+            </div>
+
+            <div id="bothall-card" class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 max-w-xl mx-auto text-center bounce-in">
+                <div id="bothall-emoji" class="text-5xl mb-2">👦👧</div>
+                <h3 id="bothall-desc" class="text-base md:text-lg font-bold text-slate-800 mb-1">Loading scenario...</h3>
+                <p id="bothall-amharic" class="text-xs text-indigo-700 font-semibold mb-5 bg-indigo-50 p-2 rounded-xl border border-indigo-100"></p>
+
+                <div id="bothall-options" class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-4">
+                    <button id="btn-both" onclick="answerBothAll('Both')" class="bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold py-4 px-3 rounded-2xl shadow-md transition transform hover:scale-105 text-lg">
+                        <i class="fa-solid fa-user-group block text-2xl mb-1"></i> BOTH <span class="block text-xs font-normal opacity-90">(ሁለቱም - 2)</span>
+                    </button>
+                    <button id="btn-all" onclick="answerBothAll('All')" class="bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-bold py-4 px-3 rounded-2xl shadow-md transition transform hover:scale-105 text-lg">
+                        <i class="fa-solid fa-users block text-2xl mb-1"></i> ALL <span class="block text-xs font-normal opacity-90">(ሁሉም - 3+)</span>
+                    </button>
+                </div>
+
+                <!-- Instant Elaborated Feedback Container -->
+                <div id="bothall-feedback-box" class="hidden text-left p-4 rounded-2xl border transition-all duration-300">
+                    <div id="bothall-feedback-title" class="font-bold text-base flex items-center gap-2 mb-2"></div>
+                    <div id="bothall-feedback-en" class="text-sm font-medium mb-1"></div>
+                    <div id="bothall-feedback-am" class="text-xs font-semibold"></div>
+                    <button id="bothall-next-btn" onclick="nextBothAllScenario()" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
+                        <span>Next Scenario</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global State & Score
+        let score = 0;
+        let currentTab = 'rule';
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('score').innerText = score;
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            document.querySelectorAll('.game-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+
+            ['rule', 'market', 'builder', 'bothall'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tabId) {
+                    btn.className = "py-3 px-3 rounded-2xl font-bold text-xs md:text-sm bg-emerald-600 text-white shadow-md transition flex items-center justify-center gap-2";
+                } else {
+                    btn.className = "py-3 px-3 rounded-2xl font-bold text-xs md:text-sm bg-slate-100 text-slate-700 hover:bg-emerald-50 transition flex items-center justify-center gap-2";
+                }
+            });
+
+            if (tabId === 'market') initMarketGame();
+            if (tabId === 'builder') initBuilderGame();
+            if (tabId === 'bothall') initBothAllGame();
+        }
+
+        // Text to Speech with British Voice
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.88; 
+                utterance.pitch = 0.85; // Lower pitch for deep golden voice effect
+                
+                const voices = window.speechSynthesis.getVoices();
+                const ukVoice = voices.find(v => v.lang === 'en-GB' || v.name.includes('UK') || v.name.includes('British') || v.name.includes('Oliver') || v.name.includes('George') || v.name.includes('Daniel'));
+                if (ukVoice) {
+                    utterance.voice = ukVoice;
+                }
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playIntroSpeech() {
+            speakText("Greetings! Welcome to the Ethiopian Quantifiers Adventure. Let us learn how to use some, any, much, many, all, and both together!");
+        }
+
+        // --- GAME 1: MERKATO MARKET DATA ---
+        const marketQuestions = [
+            {
+                emoji: "🥔",
+                noun: "potatoes",
+                amharicNoun: "ድንች (Countable Plural Noun - የሚቆጠር)",
+                sentenceStart: "There are",
+                sentenceEnd: "potatoes in the basket.",
+                correct: "many",
+                options: ["much", "many", "any", "some"],
+                explanations: {
+                    many: {
+                        en: "Correct! 'Potatoes' are countable plural items, so we use 'many' in positive statements.",
+                        am: "ትክክል! «ድንች» የሚቆጠር ነገር ስለሆነ አዎንታዊ አረፍተ ነገር ውስጥ «many» እንጠቀማለን።"
+                    },
+                    much: {
+                        en: "Incorrect. 'Much' is only used for uncountable nouns like water or coffee.",
+                        am: "ስህተት ነው። «Much» ለማይቆጠሩ ነገሮች እንደ ውሃ ወይም ቡና ብቻ ያገለግላል።"
+                    },
+                    any: {
+                        en: "Incorrect. 'Any' is mainly used in negative statements (-) or questions (?).",
+                        am: "ስህተት ነው። «Any» በዋናነት የሚገለገለው በጥያቄዎች ወይም በአሉታዊ አረፍተ ነገሮች ነው።"
+                    },
+                    some: {
+                        en: "Close, but 'many' best emphasizes the quantity of countable items here.",
+                        am: "ተቀራራቢ ነው፤ ነገር ግን «many» የቆጠራ ብዛትን በትክክል ያመላክታል።"
+                    }
+                }
+            },
+            {
+                emoji: "💰",
+                noun: "money",
+                amharicNoun: "ገንዘብ (Uncountable Noun - የማይቆጠር)",
+                sentenceStart: "I do not have",
+                sentenceEnd: "money for the taxi.",
+                correct: "any",
+                options: ["many", "some", "any", "both"],
+                explanations: {
+                    any: {
+                        en: "Correct! This is a negative sentence ('do not have'), so we use 'any'.",
+                        am: "ትክክል! ይህ አረፍተ ነገር ክህደት/አሉታዊ («do not have») ስለሆነ «any» እንጠቀማለን።"
+                    },
+                    many: {
+                        en: "Incorrect. Money is an uncountable mass noun, so 'many' cannot be used.",
+                        am: "ስህተት ነው። ገንዘብ የማይቆጠር ስለሆነ «many» አብሮት አይሄድም።"
+                    },
+                    some: {
+                        en: "Incorrect. In negative sentences (-), we change 'some' to 'any'.",
+                        am: "ስህተት ነው። በአሉታዊ (negative) አረፍተ ነገር ውስጥ «some» ወደ «any» ይለወጣል።"
+                    },
+                    both: {
+                        en: "Incorrect. 'Both' is only used when referring to exactly two items.",
+                        am: "ስህተት ነው። «Both» ለሁለት ነገሮች ብቻ የሚያገለግል ነው።"
+                    }
+                }
+            },
+            {
+                emoji: "☕",
+                noun: "coffee",
+                amharicNoun: "ቡና (Uncountable Noun - የማይቆጠር)",
+                sentenceStart: "Would you like",
+                sentenceEnd: "coffee?",
+                correct: "some",
+                options: ["much", "many", "any", "some"],
+                explanations: {
+                    some: {
+                        en: "Correct! In polite offers expecting a 'yes', we use 'some' even in questions.",
+                        am: "ትክክል! ለአክብሮት እና ለአቅርቦት ጥያቄዎች «some» የሚለውን ቃል እንጠቀማለን።"
+                    },
+                    much: {
+                        en: "Incorrect. We do not ask 'Would you like much coffee?' in polite offers.",
+                        am: "ስህተት ነው። «Would you like much coffee?» ብለን ቡና አንጋብዝም።"
+                    },
+                    many: {
+                        en: "Incorrect. Coffee is uncountable, so 'many' is incorrect.",
+                        am: "ስህተት ነው። ቡና የማይቆጠር በመሆኑ «many» አይሆንም።"
+                    },
+                    any: {
+                        en: "Incorrect. While 'any' is used in standard questions, 'some' is used for polite offers.",
+                        am: "ስህተት ነው። «Any» ለመደበኛ ጥያቄዎች ሲሆን «some» ግን ለትህትና ግብዣ ያገለግላል።"
+                    }
+                }
+            },
+            {
+                emoji: "🫓",
+                noun: "injera",
+                amharicNoun: "እንጀራ (Uncountable mass noun - የማይቆጠር)",
+                sentenceStart: "There is not",
+                sentenceEnd: "injera left on the platter.",
+                correct: "much",
+                options: ["many", "much", "both", "all"],
+                explanations: {
+                    much: {
+                        en: "Correct! Injera as a mass food noun takes 'much' in negative statements.",
+                        am: "ትክክል! እንጀራ በጅምላ የማይቆጠር ምግብ ስለሆነ «much» እንጠቀማለን።"
+                    },
+                    many: {
+                        en: "Incorrect. 'Many' is reserved for countable plural nouns like 'rolls' or 'plates'.",
+                        am: "ስህተት ነው። «Many» ለሚቆጠሩ ነገሮች ብቻ የሚያገለግል ነው።"
+                    },
+                    both: {
+                        en: "Incorrect. 'Both' refers strictly to two distinct items.",
+                        am: "ስህተት ነው። «Both» የሚያመላክተው ሁለት ነገሮችን ብቻ ነው።"
+                    },
+                    all: {
+                        en: "Incorrect. 'All' does not fit in a negative sentence starting with 'is not'.",
+                        am: "ስህተት ነው። «All» ከአሉታዊ አረፍተ ነገር ጋር እዚህ ቦታ አይሄድም።"
+                    }
+                }
+            },
+            {
+                emoji: "✏️",
+                noun: "pencils",
+                amharicNoun: "እርሳሶች (Countable Plural - የሚቆጠሩ)",
+                sentenceStart: "Do you have",
+                sentenceEnd: "pencils for class?",
+                correct: "any",
+                options: ["much", "many", "any", "all"],
+                explanations: {
+                    any: {
+                        en: "Correct! For general questions (?) about countable items, we use 'any'.",
+                        am: "ትክክል! ለሚቆጠሩ ነገሮች ጥያቄ (?) ሲጠየቅ «any» እንጠቀማለን።"
+                    },
+                    much: {
+                        en: "Incorrect. 'Much' cannot be used with countable nouns like pencils.",
+                        am: "ስህተት ነው። «Much» ለሚቆጠሩ ነገሮች እንደ እርሳስ ሊሆን አይችልም።"
+                    },
+                    many: {
+                        en: "Incorrect. Although pencils are countable, 'any' is the standard for questions.",
+                        am: "ስህተት ነው። እርሳስ ቢቆጠርም ለጥያቄ ተገቢው «any» ነው።"
+                    },
+                    all: {
+                        en: "Incorrect. 'All' means every single one, which doesn't fit asking if someone has pencils.",
+                        am: "ስህተት ነው። «All» ሁሉንም ስለሚያመላክት ለጥያቄው አይስማማም።"
+                    }
+                }
+            },
+            {
+                emoji: "🍌",
+                noun: "bananas",
+                amharicNoun: "ሙዞች (Countable Plural - የሚቆጠሩ)",
+                sentenceStart: "Abebe bought",
+                sentenceEnd: "bananas at the shop.",
+                correct: "many",
+                options: ["much", "many", "any", "both"],
+                explanations: {
+                    many: {
+                        en: "Correct! Bananas can be counted, so we use 'many' to express a large quantity.",
+                        am: "ትክክል! ሙዝ የሚቆጠር በመሆኑ የብዛት መግለጫው «many» ይሆናል።"
+                    },
+                    much: {
+                        en: "Incorrect. Bananas are countable items, so 'much' cannot be used.",
+                        am: "ስህተት ነው። ሙዞች ስለሚቆጠሩ «much» አይሆንም።"
+                    },
+                    any: {
+                        en: "Incorrect. 'Any' is for negatives or questions, not affirmative actions.",
+                        am: "ስህተት ነው። «Any» በጥያቄ ወይም በአሉታዊ አረፍተ ነገር ነው የሚገባው።"
+                    },
+                    both: {
+                        en: "Incorrect. 'Both' implies exactly two bananas, which is not specified.",
+                        am: "ስህተት ነው። «Both» የሚያመላክተው ሁለት ሙዞችን ብቻ ነው።"
+                    }
+                }
+            },
+            {
+                emoji: "🥛",
+                noun: "milk",
+                amharicNoun: "ወተት (Uncountable Liquid - የማይቆጠር)",
+                sentenceStart: "Does she have",
+                sentenceEnd: "milk in the jar?",
+                correct: "any",
+                options: ["many", "some", "any", "both"],
+                explanations: {
+                    any: {
+                        en: "Correct! 'Any' is used in questions asking about uncountable quantities.",
+                        am: "ትክክል! የማይቆጠሩ ነገሮችን በጥያቄ መልክ ስንጠይቅ «any» እንጠቀማለን።"
+                    },
+                    many: {
+                        en: "Incorrect. Milk is liquid and uncountable, so 'many' cannot be used.",
+                        am: "ስህተት ነው። ወተት ፈሳሽና የማይቆጠር ስለሆነ «many» አይባልም።"
+                    },
+                    some: {
+                        en: "Incorrect. In questions, 'any' is used unless making an offer.",
+                        am: "ስህተት ነው። በግልጽ ጥያቄ ውስጥ «any» ይገባል።"
+                    },
+                    both: {
+                        en: "Incorrect. 'Both' only refers to two items.",
+                        am: "ስህተት ነው። «Both» ለሁለት ነገሮች ብቻ ያገለግላል።"
+                    }
+                }
+            },
+            {
+                emoji: "📚",
+                noun: "books",
+                amharicNoun: "መጻሕፍት (Countable - የሚቆጠሩ)",
+                sentenceStart: "The student read",
+                sentenceEnd: "books yesterday.",
+                correct: "some",
+                options: ["much", "some", "any", "both"],
+                explanations: {
+                    some: {
+                        en: "Correct! 'Some' is used in positive statements with countable plural nouns.",
+                        am: "ትክክል! «Some» ለሚቆጠሩ ነገሮች በአዎንታዊ አረፍተ ነገር ውስጥ ያገለግላል።"
+                    },
+                    much: {
+                        en: "Incorrect. Books are countable, so 'much' is incorrect.",
+                        am: "ስህተት ነው። መጻሕፍት የሚቆጠሩ ስለሆኑ «much» አይሆንም።"
+                    },
+                    any: {
+                        en: "Incorrect. 'Any' is used in questions or negative statements.",
+                        am: "ስህተት ነው። «Any» በጥያቄ ወይም በአሉታዊ አረፍተ ነገር ይገባል።"
+                    },
+                    both: {
+                        en: "Incorrect. 'Both' requires exactly two books to be specified.",
+                        am: "ስህተት ነው። «Both» ለሁለት መጻሕፍት ብቻ የተወሰነ ነው።"
+                    }
+                }
+            }
+        ];
+
+        let marketIndex = 0;
+
+        function initMarketGame() {
+            marketIndex = 0;
+            loadMarketQuestion();
+        }
+
+        function loadMarketQuestion() {
+            if (marketIndex >= marketQuestions.length) {
+                document.getElementById('market-card').innerHTML = `
+                    <div class="py-6">
+                        <i class="fa-solid fa-trophy text-6xl text-amber-500 mb-4 animate-bounce"></i>
+                        <h3 class="text-2xl font-bold text-emerald-900 mb-1">Merkato Market Complete!</h3>
+                        <p class="text-slate-600 text-sm mb-6">ገበያውን በድል አጠናቀዋል! Great job learning quantifiers!</p>
+                        <button onclick="initMarketGame()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow">Play Again</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = marketQuestions[marketIndex];
+            document.getElementById('market-progress').innerText = `${marketIndex + 1} / ${marketQuestions.length}`;
+            document.getElementById('market-emoji').innerText = q.emoji;
+            document.getElementById('market-title').innerText = `Item: ${q.noun}`;
+            document.getElementById('market-amharic').innerText = q.amharicNoun;
+            document.getElementById('market-sentence-start').innerText = q.sentenceStart;
+            document.getElementById('market-blank').innerText = "____";
+            document.getElementById('market-sentence-end').innerText = q.sentenceEnd;
+
+            // Hide feedback box
+            document.getElementById('market-feedback-box').classList.add('hidden');
+
+            const optContainer = document.getElementById('market-options');
+            optContainer.innerHTML = "";
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.id = `market-opt-${opt}`;
+                btn.className = "bg-slate-100 hover:bg-emerald-100 hover:text-emerald-900 text-slate-800 font-bold py-3 px-4 rounded-xl border border-slate-200 transition text-base shadow-sm";
+                btn.innerText = opt;
+                btn.onclick = () => selectMarketOption(opt, q);
+                optContainer.appendChild(btn);
+            });
+
+            speakText(`${q.sentenceStart} blank ${q.sentenceEnd}`);
+        }
+
+        function selectMarketOption(selected, q) {
+            const isCorrect = (selected === q.correct);
+            const explanation = q.explanations[selected];
+
+            // Highlight buttons
+            q.options.forEach(opt => {
+                const btn = document.getElementById(`market-opt-${opt}`);
+                btn.disabled = true; // Disable further clicking
+                if (opt === q.correct) {
+                    btn.className = "bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl border-2 border-emerald-600 shadow-md text-base";
+                    btn.innerHTML = `${opt} <i class="fa-solid fa-check ml-1"></i>`;
+                } else if (opt === selected && !isCorrect) {
+                    btn.className = "bg-red-500 text-white font-bold py-3 px-4 rounded-xl border-2 border-red-600 shadow-md text-base";
+                    btn.innerHTML = `${opt} <i class="fa-solid fa-xmark ml-1"></i>`;
+                } else {
+                    btn.className = "bg-slate-100 text-slate-400 font-bold py-3 px-4 rounded-xl border border-slate-200 text-base opacity-60";
+                }
+            });
+
+            // Fill blank in sentence
+            document.getElementById('market-blank').innerText = selected;
+
+            // Show feedback box with instant bilingual details
+            const feedbackBox = document.getElementById('market-feedback-box');
+            const titleEl = document.getElementById('market-feedback-title');
+            const enEl = document.getElementById('market-feedback-en');
+            const amEl = document.getElementById('market-feedback-am');
+
+            feedbackBox.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedbackBox.className = "text-left p-4 rounded-2xl border bg-emerald-50 border-emerald-300 text-emerald-900 bounce-in";
+                titleEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i> <span>Correct Answer! (ትክክለኛ መልስ!)</span>`;
+                updateScore(10);
+                speakText(`Correct! ${selected}.`);
+            } else {
+                feedbackBox.className = "text-left p-4 rounded-2xl border bg-red-50 border-red-300 text-red-900 bounce-in";
+                titleEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-600 text-xl"></i> <span>Incorrect! (ስህተት ነው)</span>`;
+                speakText(`Incorrect.`);
+            }
+
+            enEl.innerText = explanation.en;
+            amEl.innerText = explanation.am;
+        }
+
+        function nextMarketQuestion() {
+            marketIndex++;
+            loadMarketQuestion();
+        }
+
+        // --- GAME 2: SENTENCE BUILDER DATA ---
+        const builderPuzzles = [
+            {
+                translation: "ሁለቱም ወንድም እና እህት ተማሪዎች ናቸው።",
+                words: ["Both", "the", "brother", "and", "sister", "are", "students."],
+                correct: "Both the brother and sister are students.",
+                explanationEn: "Use 'Both' when referring to exactly two people (brother and sister).",
+                explanationAm: "«Both» የሚያገለግለው ለሁለት ሰዎች (ወንድምና እህት) ብቻ ነው።"
+            },
+            {
+                translation: "በአትክልቱ ውስጥ ብዙ አበቦች አሉ።",
+                words: ["There", "are", "many", "flowers", "in", "the", "garden."],
+                correct: "There are many flowers in the garden.",
+                explanationEn: "'Flowers' are countable, so 'many' is used in this positive sentence.",
+                explanationAm: "«አበቦች» የሚቆጠሩ ስለሆኑ በአዎንታዊ አረፍተ ነገር «many» እንጠቀማለን።"
+            },
+            {
+                translation: "ምንም ውኃ የለኝም።",
+                words: ["I", "do", "not", "have", "any", "water."],
+                correct: "I do not have any water.",
+                explanationEn: "In negative sentences with 'do not', 'any' is used to express absence.",
+                explanationAm: "«do not» ባለው አሉታዊ አረፍተ ነገር ውስጥ «any» ይገባል።"
+            },
+            {
+                translation: "ጓደኞቼን ሁሉ እወዳቸዋለሁ።",
+                words: ["I", "like", "all", "of", "my", "friends."],
+                correct: "I like all of my friends.",
+                explanationEn: "Use 'all' when talking about three or more individuals in a group.",
+                explanationAm: "«All» ከሦስት ወይም ከዚያ በላይ ለሆኑ ቡድኖች ያገለግላል።"
+            },
+            {
+                translation: "ብዙ ገንዘብ አለኝ።",
+                words: ["I", "have", "much", "money."],
+                correct: "I have much money.",
+                explanationEn: "'Money' is uncountable, so 'much' is the appropriate quantifier.",
+                explanationAm: "«ገንዘብ» የማይቆጠር ስለሆነ «much» ተገቢው መለኪያ ነው።"
+            }
+        ];
+
+        let builderIndex = 0;
+        let selectedTokens = [];
+        let availableTokens = [];
+
+        function initBuilderGame() {
+            builderIndex = 0;
+            loadBuilderPuzzle();
+        }
+
+        function loadBuilderPuzzle() {
+            if (builderIndex >= builderPuzzles.length) {
+                document.getElementById('builder-card').innerHTML = `
+                    <div class="py-6">
+                        <i class="fa-solid fa-award text-6xl text-amber-500 mb-4 animate-bounce"></i>
+                        <h3 class="text-2xl font-bold text-amber-900 mb-1">Sentence Builder Champion!</h3>
+                        <p class="text-slate-600 text-sm mb-6">አረፍተ ነገር አቀናጅተው ጨርሰዋል! Excellent work!</p>
+                        <button onclick="initBuilderGame()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-6 py-3 rounded-xl shadow">Play Again</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const p = builderPuzzles[builderIndex];
+            document.getElementById('builder-progress').innerText = `${builderIndex + 1} / ${builderPuzzles.length}`;
+            document.getElementById('builder-translation').innerText = `Amharic Meaning: ${p.translation}`;
+            document.getElementById('builder-feedback-box').classList.add('hidden');
+            document.getElementById('builder-check-btn').disabled = false;
+
+            selectedTokens = [];
+            availableTokens = [...p.words].sort(() => Math.random() - 0.5);
+            renderBuilderTokens();
+        }
+
+        function renderBuilderTokens() {
+            const targetContainer = document.getElementById('builder-target');
+            targetContainer.innerHTML = "";
+            if (selectedTokens.length === 0) {
+                targetContainer.innerHTML = '<span class="text-slate-400 italic text-xs">Tap words below to build sentence here...</span>';
+            } else {
+                selectedTokens.forEach((word, idx) => {
+                    const chip = document.createElement('button');
+                    chip.className = "bg-amber-500 text-white font-bold px-3 py-1.5 rounded-xl shadow text-xs transition transform hover:scale-105 flex items-center gap-1";
+                    chip.innerHTML = `${word} <i class="fa-solid fa-xmark text-xs"></i>`;
+                    chip.onclick = () => {
+                        selectedTokens.splice(idx, 1);
+                        availableTokens.push(word);
+                        renderBuilderTokens();
+                    };
+                    targetContainer.appendChild(chip);
+                });
+            }
+
+            const sourceContainer = document.getElementById('builder-source');
+            sourceContainer.innerHTML = "";
+            availableTokens.forEach((word, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "bg-slate-100 hover:bg-amber-100 hover:text-amber-900 text-slate-800 font-bold px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm transition text-xs";
+                btn.innerText = word;
+                btn.onclick = () => {
+                    availableTokens.splice(idx, 1);
+                    selectedTokens.push(word);
+                    renderBuilderTokens();
+                };
+                sourceContainer.appendChild(btn);
+            });
+        }
+
+        function resetBuilder() {
+            const p = builderPuzzles[builderIndex];
+            selectedTokens = [];
+            availableTokens = [...p.words].sort(() => Math.random() - 0.5);
+            renderBuilderTokens();
+            document.getElementById('builder-feedback-box').classList.add('hidden');
+        }
+
+        function checkBuilder() {
+            const p = builderPuzzles[builderIndex];
+            const currentSentence = selectedTokens.join(' ');
+            const isCorrect = (currentSentence === p.correct);
+
+            const feedbackBox = document.getElementById('builder-feedback-box');
+            const titleEl = document.getElementById('builder-feedback-title');
+            const enEl = document.getElementById('builder-feedback-en');
+            const amEl = document.getElementById('builder-feedback-am');
+
+            feedbackBox.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedbackBox.className = "text-left p-4 rounded-2xl border bg-emerald-50 border-emerald-300 text-emerald-900 bounce-in";
+                titleEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i> <span>Perfect Order! (ትክክለኛ አረፍተ ነገር!)</span>`;
+                enEl.innerText = p.explanationEn;
+                amEl.innerText = p.explanationAm;
+                updateScore(15);
+                speakText(p.correct);
+                document.getElementById('builder-check-btn').disabled = true;
+            } else {
+                feedbackBox.className = "text-left p-4 rounded-2xl border bg-red-50 border-red-300 text-red-900 bounce-in";
+                titleEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-600 text-xl"></i> <span>Not Quite Right! (እንደገና ይሞክሩ)</span>`;
+                enEl.innerText = `Expected: "${p.correct}"`;
+                amEl.innerText = `ስህተት አለበት! ቃላቱን እንደገና አስተካክለው ያስቀምጡ።`;
+                speakText("Let's check the order again.");
+            }
+        }
+
+        function nextBuilderPuzzle() {
+            builderIndex++;
+            loadBuilderPuzzle();
+        }
+
+        // --- GAME 3: BOTH VS ALL DATA ---
+        const bothAllScenarios = [
+            {
+                emoji: "👦👧",
+                desc: "Kalkidan and Dawit are running in the school yard. (2 students)",
+                amharic: "ቃልኪዳን እና ዳዊት በትምህርት ቤት ግቢ ውስጥ እየሮጡ ነው። (2 ተማሪዎች)",
+                correct: "Both",
+                explanations: {
+                    Both: {
+                        en: "Correct! There are exactly 2 students (Kalkidan and Dawit), so we use 'Both'.",
+                        am: "ትክክል! ሁለት ተማሪዎች (ቃልኪዳን እና ዳዊት) ብቻ ስለሆኑ «Both» ይገባል።"
+                    },
+                    All: {
+                        en: "Incorrect. 'All' requires 3 or more people. Here there are only 2.",
+                        am: "ስህተት ነው። «All» ለሦስትና ከዚያ በላይ ሰዎችን የሚያመለክት ነው። እዚህ ግን ሁለት ብቻ ናቸው።"
+                    }
+                }
+            },
+            {
+                emoji: "👨‍👩‍👧‍👦🍎",
+                desc: "There are 4 children sharing a basket of mangos in Hawassa. (4 children)",
+                amharic: "በሐዋሳ አራት குழந்தைகள் የሀብሀብ ዘለላ እየተካፈሉ ነው። (4 ልጆች)",
+                correct: "All",
+                explanations: {
+                    All: {
+                        en: "Correct! There are 4 children (more than 2), so we use 'All'.",
+                        am: "ትክክል! 4 ልጆች (ከሁለት በላይ) ስለሆኑ «All» እንጠቀማለን።"
+                    },
+                    Both: {
+                        en: "Incorrect. 'Both' is strictly limited to 2 individuals, not 4.",
+                        am: "ስህተት ነው። «Both» ለሁለት ሰዎች ብቻ የተገደበ ነው፤ ለ 4 አይሆንም።"
+                    }
+                }
+            },
+            {
+                emoji: "👟👟",
+                desc: "My left shoe and right shoe are brand new. (2 shoes)",
+                amharic: "የግራ እና የቀኝ ጫማዎቼ አዲስ ናቸው። (2 ጫማዎች)",
+                correct: "Both",
+                explanations: {
+                    Both: {
+                        en: "Correct! Shoes come in a pair of 2, so 'Both' is used.",
+                        am: "ትክክል! ጫማ ጥንድ (2) ስለሆነ «Both» የሚለው ቃል ይገባል።"
+                    },
+                    All: {
+                        en: "Incorrect. A pair consists of 2 items, so 'All' cannot be used.",
+                        am: "ስህተት ነው። ጥንድ ማለት 2 ነገሮች ስለሆነ «All» አይገባም።"
+                    }
+                }
+            },
+            {
+                emoji: "⚽⚽⚽",
+                desc: "There are 5 footballs in the stadium for the match. (5 footballs)",
+                amharic: "በስቴዲየሙ ውስጥ ለጨዋታው 5 ኳሶች አሉ። (5 ኳሶች)",
+                correct: "All",
+                explanations: {
+                    All: {
+                        en: "Correct! There are 5 footballs (3 or more), so we use 'All'.",
+                        am: "ትክክል! 5 ኳሶች (ከሦስት በላይ) ስለሆኑ «All» እንጠቀማለን።"
+                    },
+                    Both: {
+                        en: "Incorrect. 'Both' can never be used for 5 items.",
+                        am: "ስህተት ነው። «Both» ለ 5 ነገሮች ሊሆን አይችልም።"
+                    }
+                }
+            },
+            {
+                emoji: "👩‍🏫👨‍🏫",
+                desc: "Teacher Tadesse and Teacher Almaz attended the staff meeting. (2 teachers)",
+                amharic: "መምህር ታደሰ እና መምህርት አልማዝ በስብሰባው ላይ ተገኝተዋል። (2 መምህራን)",
+                correct: "Both",
+                explanations: {
+                    Both: {
+                        en: "Correct! Exactly 2 teachers attended, so we use 'Both'.",
+                        am: "ትክክል! ሁለት መምህራን ብቻ በመሆናቸው «Both» ይሆናል።"
+                    },
+                    All: {
+                        en: "Incorrect. 'All' is for 3 or more people.",
+                        am: "ስህተት ነው። «All» ከሦስት በላይ ለሆኑ ሰዎች ነው።"
+                    }
+                }
+            }
+        ];
+
+        let bothAllIndex = 0;
+
+        function initBothAllGame() {
+            bothAllIndex = 0;
+            loadBothAllScenario();
+        }
+
+        function loadBothAllScenario() {
+            const bothAllCard = document.getElementById('bothall-card');
+            if (!bothAllCard) return;
+
+            if (bothAllIndex >= bothAllScenarios.length) {
+                bothAllCard.innerHTML = `
+                    <div class="py-6">
+                        <i class="fa-solid fa-star text-6xl text-amber-500 mb-4 animate-bounce"></i>
+                        <h3 class="text-2xl font-bold text-indigo-900 mb-1">Both vs All Expert!</h3>
+                        <p class="text-slate-600 text-sm mb-6">ሁሉንም ጥያቄዎች በትክክል መልሰዋል! Outstanding performance!</p>
+                        <button onclick="initBothAllGame()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl shadow">Play Again</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const s = bothAllScenarios[bothAllIndex];
+            
+            const elProgress = document.getElementById('bothall-progress');
+            const elEmoji = document.getElementById('bothall-emoji');
+            const elDesc = document.getElementById('bothall-desc');
+            const elAmharic = document.getElementById('bothall-amharic');
+            const elFeedback = document.getElementById('bothall-feedback-box');
+
+            if (elProgress) elProgress.innerText = `${bothAllIndex + 1} / ${bothAllScenarios.length}`;
+            if (elEmoji) elEmoji.innerText = s.emoji;
+            if (elDesc) elDesc.innerText = s.desc;
+            if (elAmharic) elAmharic.innerText = s.amharic;
+            if (elFeedback) elFeedback.classList.add('hidden');
+
+            // Reset buttons
+            const btnBoth = document.getElementById('btn-both');
+            const btnAll = document.getElementById('btn-all');
+            if (btnBoth) {
+                btnBoth.disabled = false;
+                btnBoth.className = "bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold py-4 px-3 rounded-2xl shadow-md transition transform hover:scale-105 text-lg";
+            }
+            if (btnAll) {
+                btnAll.disabled = false;
+                btnAll.className = "bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-bold py-4 px-3 rounded-2xl shadow-md transition transform hover:scale-105 text-lg";
+            }
+
+            speakText(s.desc);
+        }
+
+        function answerBothAll(choice) {
+            const s = bothAllScenarios[bothAllIndex];
+            const isCorrect = (choice === s.correct);
+            const explanation = s.explanations[choice];
+
+            const btnBoth = document.getElementById('btn-both');
+            const btnAll = document.getElementById('btn-all');
+            btnBoth.disabled = true;
+            btnAll.disabled = true;
+
+            if (choice === 'Both') {
+                btnBoth.className = isCorrect 
+                    ? "bg-emerald-500 text-white font-bold py-4 px-3 rounded-2xl border-2 border-emerald-600 shadow-md text-lg" 
+                    : "bg-red-500 text-white font-bold py-4 px-3 rounded-2xl border-2 border-red-600 shadow-md text-lg";
+            }
+            if (choice === 'All') {
+                btnAll.className = isCorrect 
+                    ? "bg-emerald-500 text-white font-bold py-4 px-3 rounded-2xl border-2 border-emerald-600 shadow-md text-lg" 
+                    : "bg-red-500 text-white font-bold py-4 px-3 rounded-2xl border-2 border-red-600 shadow-md text-lg";
+            }
+
+            const feedbackBox = document.getElementById('bothall-feedback-box');
+            const titleEl = document.getElementById('bothall-feedback-title');
+            const enEl = document.getElementById('bothall-feedback-en');
+            const amEl = document.getElementById('bothall-feedback-am');
+
+            feedbackBox.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedbackBox.className = "text-left p-4 rounded-2xl border bg-emerald-50 border-emerald-300 text-emerald-900 bounce-in";
+                titleEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i> <span>Correct Choice! (በትክክል መርጠዋል!)</span>`;
+                updateScore(10);
+                speakText(`Correct! ${choice}`);
+            } else {
+                feedbackBox.className = "text-left p-4 rounded-2xl border bg-red-50 border-red-300 text-red-900 bounce-in";
+                titleEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-600 text-xl"></i> <span>Incorrect! (ስህተት ነው)</span>`;
+                speakText("Incorrect. Remember the rule.");
+            }
+
+            enEl.innerText = explanation.en;
+            amEl.innerText = explanation.am;
+        }
+
+        function nextBothAllScenario() {
+            bothAllIndex++;
+            loadBothAllScenario();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            switchTab('rule');
+        };
+    </script>
+</body>
+</html>
